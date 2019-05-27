@@ -1,30 +1,40 @@
-﻿using System;
+﻿using AutomatedTellerMachine.Models;
+using AutomatedTellerMachine.Services;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace AutomatedTellerMachine.Controllers
 {
     public class HomeController : Controller
     {
+        private IAuthentication _service;
+        private List<string> _cardAttempts = new List<string>();
+        // GET /home/index 
+        public HomeController()
+        {
+            _service = new AuthenticationService();
+        }
+        public HomeController(IAuthentication service)
+        {
+            _service = service;
+        }
         public ActionResult Index()
         {
             return View();
         }
-
-        public ActionResult About()
+        [HttpPost]
+        public ActionResult Index(LoginViewModel form)
         {
-            ViewBag.Message = "Your application description page.";
+            Auth auth = _service.Login(form.CardNumner, Convert.ToInt32(form.Pin));
 
+            if (!auth.Status)
+            {
+                ViewBag.Message = auth.Message;
+            }
             return View();
+
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }
