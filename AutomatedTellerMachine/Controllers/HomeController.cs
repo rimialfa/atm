@@ -9,6 +9,7 @@ namespace AutomatedTellerMachine.Controllers
     public class HomeController : Controller
     {
         private IAuthentication _service;
+
         private List<string> _cardAttempts = new List<string>();
         // GET /home/index 
         public HomeController()
@@ -26,7 +27,7 @@ namespace AutomatedTellerMachine.Controllers
         [HttpPost]
         public ActionResult Index(LoginViewModel form)
         {
-            Auth auth = _service.Login(form.CardNumner, Convert.ToInt32(form.Pin));
+            Response auth = _service.Login(form.CardNumner, Convert.ToInt32(form.Pin));
 
             if (!auth.Status)
             {
@@ -35,6 +36,7 @@ namespace AutomatedTellerMachine.Controllers
             return View();
 
         }
+       
 
     }
 }

@@ -4,7 +4,7 @@ namespace AutomatedTellerMachine.Services
 {
     public interface IAuthentication
     {
-        Auth Login(string cardNumber, int pin);
+        Response Login(string cardNumber, int pin);
     }
 
 }
