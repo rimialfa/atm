@@ -27,16 +27,12 @@ namespace AutomatedTellerMachine.Controllers
         [HttpPost]
         public ActionResult Index(LoginViewModel form)
         {
-            Response auth = _service.Login(form.CardNumner, Convert.ToInt32(form.Pin));
+            Response auth = _service.Login(form.Number, Convert.ToInt32(form.Pin));
 
-            if (!auth.Status)
-            {
-                ViewBag.Message = auth.Message;
-            }
-            return View();
+            return Json(auth, JsonRequestBehavior.AllowGet);
 
         }
-       
+
 
     }
 }

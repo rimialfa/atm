@@ -2,7 +2,7 @@
 {
     public class LoginViewModel
     {
-        public string CardNumner { get; set; }
+        public string Number { get; set; }
         public int Pin { get; set; }
     }
 }

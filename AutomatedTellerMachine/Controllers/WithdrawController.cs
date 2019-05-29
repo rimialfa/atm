@@ -11,12 +11,13 @@ namespace AutomatedTellerMachine.Controllers
         {
             _service = new WithdrawalService();
         }
-        // GET: Withdraw
-        public ActionResult Index()
+        // GET: Withdraw/Index/{amount}
+        public ActionResult Index(int id)
         {
-            string st = _service.DispensorHelper(70, 10);
-            return Content(st.Substring(0, st.LastIndexOf("+")));
+            Response response = _service.Dispensor(id);
+            return Content(response.Message);
         }
+
 
     }
 }

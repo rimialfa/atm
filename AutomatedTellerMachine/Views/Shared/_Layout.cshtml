@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -7,10 +7,12 @@
     <meta name="author" content="">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+
     @RenderSection("styles", required: false)
+    <script src="~/Scripts/angular/angular.min.js"></script>
+    <script src="~/Scripts/angular/app.js"></script>
 </head>
-<body>
+<body ng-app="myApp">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         <a class="navbar-brand" href="#">Navbar</a>

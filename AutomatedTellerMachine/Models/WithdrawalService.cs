@@ -1,39 +1,60 @@
 ﻿using AutomatedTellerMachine.Services;
 using System;
-using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace AutomatedTellerMachine.Models
 {
     public class WithdrawalService : IWithdrawal
     {
-        public List<string> Dispensor(int amount)
+        public Response Dispensor(int amount)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            int[] denominators = { 1000, 500, 200, 100, 50, 20, 10 };
+            Response response = new Response();
+            try
+            {
+                if (amount % 10 == 0)
+                {
+                    for (int i = 0; i < denominators.Length; i++)
+                    {
+                        string st = DispensorHelper(amount, i);
+                        if (!st.Equals(string.Empty))
+                        {
+                            st = st.Substring(0, st.LastIndexOf("+")); // Remove the last + resulted by the last call of the recursive function
+                            sb.Append("<input type=\"radio\" name=\"dispense\" value=\"" + i + "\"> " + st + "<br>");
+                        }
+
+                    }
+                    response.Status = true;
+                    response.Message = sb.ToString();
+                }
+                else
+                {
+                    response.Status = false;
+                    response.Message = "Amount must be evenly divisible by 10 with no cents";
+                }
+
+            }
+            catch (Exception e)
+            {
+                response.Status = false;
+                response.Message = e.ToString();
+            }
+
+            return response;
         }
 
-        public string DispensorHelper(int amount, int denom)
+        public string DispensorHelper(int amount, int index)
         {
-            if (amount / denom < 1)
+            int[] denominators = { 1000, 500, 200, 100, 50, 20, 10, 1 };
+            if (amount / denominators[index] < 1)
                 return string.Empty;
             else
             {
-                int count = amount / denom;
-                int prevDenom = denom;
-                if (denom == 1000)
-                    denom = 500;
-                else if (denom == 500)
-                    denom = 200;
-                else if (denom == 200)
-                    denom = 100;
-                else if (denom == 100)
-                    denom = 50;
-                else if (denom == 50)
-                    denom = 20;
-                else
-                    denom = 10;
+                int count = amount / denominators[index];
 
-                return Convert.ToString(count) + "*" + Convert.ToString(prevDenom) + "+" + DispensorHelper(amount - (count * prevDenom), denom);
+                return Convert.ToString(count) + "*" + Convert.ToString(denominators[index]) + "+" + DispensorHelper(amount - (count * denominators[index]), ++index);
             }
         }
 
