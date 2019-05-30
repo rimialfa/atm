@@ -9,11 +9,18 @@
     @Styles.Render("~/Content/css")
 
     @RenderSection("styles", required: false)
+    <style>
+        #innerScreen {
+            border: 1px solid #49505733;
+        }
+    </style>
     <script src="~/Scripts/angular/angular.min.js"></script>
     <script src="~/Scripts/angular/app.js"></script>
+    <script src="~/Scripts/angular/service.js"></script>
+    <script src="~/Scripts/angular/controller.js"></script>
 </head>
 <body ng-app="myApp">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    @*<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,15 +52,15 @@
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
-    </nav>
+    </nav>*@
     <main role="main" class="container">
         @RenderBody()
         
     </main><!-- /.container -->
-    <hr />
+    @*<hr />
     <footer>
         <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-    </footer>
+    </footer>*@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

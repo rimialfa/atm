@@ -1,14 +1,14 @@
-﻿app.controller("AuthCtrl", function ($scope) {
-    //Auth();
-
-    //function Auth() {
-    //    debugger;
-    //    var auth = AuthenticationService.auth();
-    //    auth.then(function (response) {
-    //        $scope.response = response.Message;
-    //    }, function () {
-    //            alert('Data not found');
-    //        });
-    //}
-    $scope.responce = "ok";
-});  
+﻿
+app.controller('authCtrl', function ($scope, AuthenticationService) {
+    $scope.responce = 0;
+    $scope.card = {};
+    $scope.submitForm = function () {
+        debugger;
+        var r = AuthenticationService.getResponse($scope.card);
+        r.then(function (auth) {
+            $scope.message = auth.data.Message;
+        }, function () {
+            $scope.message = 'Data not found';
+        });
+    };
+});

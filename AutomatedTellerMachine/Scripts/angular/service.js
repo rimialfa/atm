@@ -1,6 +1,9 @@
-﻿app.service("AuthenticationService", function ($http) {
-    this.auth = function () {
-        debugger;
-        return $http.get("/home/index");
-    };
+﻿app.service('AuthenticationService', function ($http) {
+    this.getResponse = function (card) {
+        return $http({
+            method: 'POST',
+            url: '/home/index',
+            data: card
+        });
+    }
 });
