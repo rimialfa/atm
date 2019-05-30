@@ -127,6 +127,7 @@
     </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountService.cs" />
+    <Compile Include="Models\RadioListViewModel.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\AuthenticationService.cs" />
     <Compile Include="Models\Card.cs" />
@@ -217,10 +218,10 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Withdraw\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Withdraw\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

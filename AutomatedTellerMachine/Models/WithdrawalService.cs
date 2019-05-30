@@ -1,6 +1,7 @@
 ﻿using AutomatedTellerMachine.Services;
+using Newtonsoft.Json;
 using System;
-using System.Text;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AutomatedTellerMachine.Models
@@ -9,8 +10,9 @@ namespace AutomatedTellerMachine.Models
     {
         public Response Dispensor(int amount)
         {
-            StringBuilder sb = new StringBuilder();
-            int[] denominators = { 1000, 500, 200, 100, 50, 20, 10 };
+            //StringBuilder sb = new StringBuilder();
+            List<RadioListViewModel> rl = new List<RadioListViewModel>();
+            int[] denominators = { 200, 100, 50, 20, 10 };
             Response response = new Response();
             try
             {
@@ -22,12 +24,14 @@ namespace AutomatedTellerMachine.Models
                         if (!st.Equals(string.Empty))
                         {
                             st = st.Substring(0, st.LastIndexOf("+")); // Remove the last + resulted by the last call of the recursive function
-                            sb.Append("<input type=\"radio\" name=\"dispense\" value=\"" + i + "\"> " + st + "<br>");
+                            rl.Add(new RadioListViewModel { Label = st, Value = i });
+
+                            //sb.Append("<input type=\"radio\" name=\"dispense\" value=\"" + i + "\"> " + st + "<br>");
                         }
 
                     }
                     response.Status = true;
-                    response.Message = sb.ToString();
+                    response.Message = JsonConvert.SerializeObject(rl);
                 }
                 else
                 {
@@ -47,7 +51,7 @@ namespace AutomatedTellerMachine.Models
 
         public string DispensorHelper(int amount, int index)
         {
-            int[] denominators = { 1000, 500, 200, 100, 50, 20, 10, 1 };
+            int[] denominators = { 200, 100, 50, 20, 10, 1 };
             if (amount / denominators[index] < 1)
                 return string.Empty;
             else

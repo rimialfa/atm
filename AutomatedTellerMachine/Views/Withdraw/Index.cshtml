@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<form name="myForm" novalidate ng-controller="denominatorCtrl">
+    <input type="number" name="amount" ng-model="amount" ng-change="getDenominators(myForm.amount.$valid)" required  my-directive />
+    <ul>
+        <li ng-repeat="x in records">
+            <input type="radio" name="denom" value="{{x.Value}}">{{x.Label}}
+        </li>
+    </ul>
+    <input type="submit" value="Submit" />
+</form>
+
+

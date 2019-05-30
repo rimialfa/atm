@@ -32,7 +32,5 @@ namespace AutomatedTellerMachine.Controllers
             return Json(auth, JsonRequestBehavior.AllowGet);
 
         }
-
-
     }
 }

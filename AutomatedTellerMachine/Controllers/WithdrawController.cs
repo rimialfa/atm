@@ -11,13 +11,17 @@ namespace AutomatedTellerMachine.Controllers
         {
             _service = new WithdrawalService();
         }
-        // GET: Withdraw/Index/{amount}
+        // POST: Withdraw/Index/{amount}
+        [HttpPost]
         public ActionResult Index(int id)
         {
             Response response = _service.Dispensor(id);
-            return Content(response.Message);
+            return Json(response);
         }
 
-
+        public ActionResult Index()
+        {
+            return View();
+        }
     }
 }
