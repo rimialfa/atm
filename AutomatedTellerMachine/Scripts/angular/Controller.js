@@ -1,11 +1,15 @@
 ﻿
-app.controller('authCtrl', function ($scope, ServiceRequester) {
+app.controller('authCtrl', function ($scope, ServiceRequester, $window) {
     $scope.responce = 0;
     $scope.card = {};
     $scope.submitForm = function () {
         debugger;
-        var request = ServiceRequester.getResponse("POST", "home/index", $scope.card);
+        var request = ServiceRequester.getResponse("POST",  "/Home/Index", $scope.card);
         request.then(function (auth) {
+
+            if (auth.data.Status) {
+                $window.location.href = '/Home/MainMenu';
+            }
             $scope.message = auth.data.Message;
         }, function () {
             $scope.message = 'Data not found';
@@ -13,29 +17,14 @@ app.controller('authCtrl', function ($scope, ServiceRequester) {
     };
 });
 
-app.directive('myDirective', function () {
-    return {
-        require: 'ngModel',
-        link: function (scope, element, attr, mCtrl) {
-            function isDivisibleBy10(value) {
-                if (parseInt(value) % 10 == 0 && parseInt(value) > 0) {
-                    mCtrl.$setValidity('divisibleBy10', true);
-                } else {
-                    mCtrl.$setValidity('divisibleBy10', false);
-                }
-                return value;
-            }
-            mCtrl.$parsers.push(isDivisibleBy10);
-        }
-    };
-});
+
 
 app.controller('denominatorCtrl', function ($scope, ServiceRequester) {
     debugger;
     $scope.amount = 0;
     $scope.getDenominators = function (isValid) {
         if (isValid) {
-            var request = ServiceRequester.getResponse("POST", "index", { id: $scope.amount });
+            var request = ServiceRequester.getResponse("POST", "/Withdraw/Index", { id: $scope.amount });
             request.then(function (denoms) {
                 $scope.records = JSON.parse(denoms.data.Message);
             });
@@ -44,11 +33,3 @@ app.controller('denominatorCtrl', function ($scope, ServiceRequester) {
     }
 
 });
-
-app.controller('personCtrl', function ($scope) {
-    $scope.firstName = "John";
-    $scope.lastName = "Doe";
-    $scope.fullName = function () {
-        return $scope.firstName + " " + $scope.lastName;
-    };
-})

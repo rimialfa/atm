@@ -1,6 +1,5 @@
 ﻿using AutomatedTellerMachine.Models;
 using AutomatedTellerMachine.Services;
-using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -27,10 +26,14 @@ namespace AutomatedTellerMachine.Controllers
         [HttpPost]
         public ActionResult Index(LoginViewModel form)
         {
-            Response auth = _service.Login(form.Number, Convert.ToInt32(form.Pin));
+            Response auth = _service.Login(form.Number, form.Pin);
 
             return Json(auth, JsonRequestBehavior.AllowGet);
 
+        }
+        public ActionResult MainMenu()
+        {
+            return View();
         }
     }
 }

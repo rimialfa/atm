@@ -20,10 +20,10 @@ namespace AutomatedTellerMachine.Models
             _account = account;
             _cardReader = cardReader;
         }
-        public Response Login(string cardNumber, int pin)
+        public Response Login(string cardNumber, string pin)
         {
-            // TODO: Hash256
-            string identityHash = string.Empty;
+            // Here we are not really hashing the card number with the pin, for demo purposes
+            string identityHash = "ACC" + "|" + cardNumber.Trim().ToLower() + "|" + pin;
             int attempts = 0;
             Response auth = new Response();
             try

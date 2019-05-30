@@ -10,12 +10,14 @@ namespace AutomatedTellerMachine.Models
         {
             new Account
             {
-                IdentityHash = "asdasd",
+                IdentityHash = "ACC|1234|2369",
+                Number = "AJO01254",
                 Balance = 500
             },
             new Account
             {
-                IdentityHash = "asdasd",
+                IdentityHash = "ACC|12345|2323",
+                Number = "AJO01255",
                 Balance = 150
             }
         };

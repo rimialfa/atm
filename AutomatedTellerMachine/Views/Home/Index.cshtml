@@ -8,22 +8,25 @@
 </style>
 
 <div id="innerScreen" class="row">
-    <div class="col-4 offset-4 p-4">
+    <div class="col">
         <h3 class="text-center text-uppercase">Login</h3>
         <hr />
-        <form method="post" ng-controller="authCtrl" ng-submit="submitForm()" novalidate>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Enter your card number" name="number" ng-model="card.number">
+        <div class="row p-4">
+            <div class="col">
+                <form method="post" ng-controller="authCtrl" ng-submit="submitForm()" novalidate>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Enter your card number" name="number" ng-model="card.number">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Enter your pin" name="pin" ng-model="card.pin">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <hr />
+                    <div>
+                        {{message}}
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <input type="password" class="form-control"  placeholder="Enter your pin" name="pin" ng-model="card.pin">
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-            <hr />
-            <div>
-                {{message}}
-            </div>
-        </form>
-
+        </div>
     </div>
 </div>

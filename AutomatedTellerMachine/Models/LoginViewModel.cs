@@ -3,6 +3,6 @@
     public class LoginViewModel
     {
         public string Number { get; set; }
-        public int Pin { get; set; }
+        public string Pin { get; set; }
     }
 }

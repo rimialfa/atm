@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Select";
+}
+
+<div id="innerScreen" class="row">
+    <div class="col">
+        <h3 class="text-center text-uppercase">Select an amount</h3>
+        <hr />
+        <div class="row p-4">
+            <div class="col">
+                <div class="float-right">
+                    <a href="/" class="btn btn-primary">20</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="/" class="btn btn-primary">100</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="/" class="btn btn-primary">500</a>
+                </div>
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+                <div class="float-left">
+                    <a href="/" class="btn btn-primary">50</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="/" class="btn btn-primary">200</a>
+                    <div class="dropdown-divider"></div>
+                    @Html.ActionLink("Other", "Other", "Withdraw", new { }, new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

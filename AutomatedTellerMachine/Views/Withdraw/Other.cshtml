@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Other";
+}
+<div id="innerScreen" class="row">
+    <div class="col">
+        <h3 class="text-center text-uppercase">Enter an amount</h3>
+        <hr />
+        <div class="row p-4">
+            <div class="col">
+                <form name="myForm" novalidate ng-controller="denominatorCtrl">
+                    <input type="number" name="amount" ng-model="amount" ng-change="getDenominators(myForm.amount.$valid)" required my-directive />
+                    <ul>
+                        <li ng-repeat="x in records">
+                            <input type="radio" name="denom" value="{{x.Value}}">{{x.Label}}
+                        </li>
+                    </ul>
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
