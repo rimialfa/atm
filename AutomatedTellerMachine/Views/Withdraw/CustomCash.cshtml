@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Custom Cash";
+}
+<style>
+    input, select, textarea {
+        max-width: 100%;
+    }
+    
+</style>
+<div id="innerScreen" class="row" ng-controller="accountCtrl" >
+    <div class="col" ng-controller="withdrawCustomCashCtrl">
+        <h3 class="text-center text-uppercase">@ViewBag.Title</h3>
+        <hr />
+        <div ng-show="isWithdrawing"  class="row p-4" >
+            <div class="col">
+                <div>
+                    <span>Account: {{account.Number}}</span>
+                    <span>Balance: {{account.Balance}}</span>
+                </div>
+                <hr />
+                <form name="myForm" method="post" novalidate  ng-submit="submitForm()">
+                    <div class="form-group">
+                        <input placeholder="Amount to withdraw" class="form-control" type="number" name="amount" ng-model="amount" ng-change="getDenominators(myForm.amount.$valid)" required divisible-by-10 />
+                    </div>
+                    <div class="alert text-danger">
+                        {{error}}
+                    </div>
+                    <ul class="list-group pb-4">
+                        <li class="list-group-item" ng-repeat="x in records">
+                            <input type="radio" name="denom" ng-change="enableRetrieve()" ng-model="denom" value="{{x.Value}}"> {{x.Label}}
+                        </li>
+                    </ul>
+                    @Html.ActionLink("Back", "QuickCash", "Withdraw", new { }, new { @class = "btn btn-primary float-left" })
+                    <input class="btn btn-primary float-right" ng-disabled="retrieve" type="submit" value="Retrieve" />
+                    <input type="hidden" name="acountNumber" value="{{account.Number}}" />
+                    <input type="hidden" name="acountBalance" value="{{account.Balance}}" />
+                    <input type="hidden" name="error" value="{{error}}" />
+                </form>
+            </div>
+        </div>
+        <div class="row" ng-show="isPritingReceipt">
+            <div class="col p-4">
+                <h5 class="text-center">Receipt</h5>
+                <table class="table tab-content">
+
+                    <tr>
+                        <td>Date:</td>
+                        <td>@DateTime.Now</td>
+                    </tr>
+                    <tr>
+                        <td>Account Number:</td>
+                        <td>{{account.Number}}</td>
+                    </tr>
+                    <tr>
+                        <td>Amount:</td>
+                        <td>{{amount}}</td>
+                    </tr>
+                    <tr>
+                        <td>Availabe:</td>
+                        <td>{{account.Balance - amount }}</td>
+                    </tr>
+                </table>
+                <hr />
+                <div>
+                    <a href="#" class="btn btn-primary float-left">Print Receipt</a>
+                    @Html.ActionLink("Exit", "Logout", "Auth", new { }, new { @class = "btn btn-primary float-right" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

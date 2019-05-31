@@ -128,6 +128,7 @@
     </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountService.cs" />
+    <Compile Include="Models\WithdrawViewModel.cs" />
     <Compile Include="Models\RadioListViewModel.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\AuthenticationService.cs" />
@@ -222,8 +223,9 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Withdraw\Index.cshtml" />
     <Content Include="Views\Account\MainMenu.cshtml" />
-    <Content Include="Views\Withdraw\Select.cshtml" />
-    <Content Include="Views\Withdraw\Other.cshtml" />
+    <Content Include="Views\Withdraw\QuickCash.cshtml" />
+    <Content Include="Views\Withdraw\CustomCash.cshtml" />
+    <Content Include="Views\Auth\Logout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

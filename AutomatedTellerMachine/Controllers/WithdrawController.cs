@@ -11,24 +11,28 @@ namespace AutomatedTellerMachine.Controllers
         {
             _service = new WithdrawalService();
         }
-        // POST: Withdraw/Index/{amount}
         [HttpPost]
-        public ActionResult Index(int id)
+        public ActionResult Index(int amount)
         {
-            return Json(_service.Dispensor(id));
+            return Json(_service.Denominator(amount));
         }
-
         public ActionResult Index()
         {
             return View();
         }
-        public ActionResult Select()
+        public ActionResult QuickCash()
         {
             return View();
         }
-        public ActionResult Other()
+        public ActionResult CustomCash()
         {
             return View();
         }
+        [HttpPost]
+        public ActionResult Dispense(int amount)
+        {
+            return Json(_service.Dispensor(amount));
+        }
+
     }
 }

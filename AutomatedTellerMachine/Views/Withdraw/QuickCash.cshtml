@@ -1,13 +1,13 @@
 ﻿
 @{
-    ViewBag.Title = "Select";
+    ViewBag.Title = "Quick Cash";
 }
 
-<div id="innerScreen" class="row">
-    <div class="col">
-        <h3 class="text-center text-uppercase">Select an amount</h3>
+<div id="innerScreen" class="row" ng-controller="accountCtrl">
+    <div class="col" ng-controller="withdrawQuickCashCtrl">
+        <h3 class="text-center text-uppercase">@ViewBag.Title</h3>
         <hr />
-        <form name="myForm" ng-controller="withdrawPresetCtrl" ng-submit="submitForm()" novalidate>
+        <form name="myForm" ng-show="isWithdrawing"   ng-submit="submitForm()" novalidate>
             <div class="row p-4">
                 <div class="col">
                     <ul class="list-group float-right">
@@ -21,7 +21,7 @@
                         </li>
                         <li class="list-group-item">
                             <div class="form-check">
-                                <input class="form-check-input" ng-model="value"  ng-change="checkBalance(value)" type="radio" name="amount" id="100" value="100">
+                                <input class="form-check-input" ng-model="value" ng-change="checkBalance(value)" type="radio" name="amount" id="100" value="100">
                                 <label class="form-check-label" for="100">
                                     100
                                 </label>
@@ -38,7 +38,7 @@
                     </ul>
                 </div>
                 <div class="col">
-                    <div class="text-danger">{{message}}</div>
+                    <div class="text-danger">{{error}}</div>
                 </div>
                 <div class="col">
                     <ul class="list-group float-left">
@@ -69,17 +69,48 @@
                         </li>
                     </ul>
                 </div>
-                
+
             </div>
+
             <div class="row pt-0 pr-4 pl-4 pb-4">
                 <div class="col">
                     <hr />
-                    @Html.ActionLink("Other", "Other", "Withdraw", new { }, new { @class = "btn btn-primary" })
+
+                    <a href="/" class="btn btn-primary float-left">Cancel</a>
+                    @Html.ActionLink("Other", "CustomCash", "Withdraw", new { }, new { @class = "btn btn-primary float-right" })
                 </div>
+
             </div>
-           
+
         </form>
-       
+        <div class="row" ng-show="isPritingReceipt">
+            <div class="col p-4">
+                <h5 class="text-center">Receipt</h5>
+                <table class="table tab-content">
+
+                    <tr>
+                        <td>Date:</td>
+                        <td>@DateTime.Now</td>
+                    </tr>
+                    <tr>
+                        <td>Account Number:</td>
+                        <td>{{account.Number}}</td>
+                    </tr>
+                    <tr>
+                        <td>Amount:</td>
+                        <td>{{amount}}</td>
+                    </tr>
+                    <tr>
+                        <td>Availabe:</td>
+                        <td>{{account.Balance - amount }}</td>
+                    </tr>
+                </table>
+                <hr />
+                <a href="#" class="btn btn-primary float-left">Print Receipt</a>
+                @Html.ActionLink("Exit", "Logout", "Auth", new { }, new { @class = "btn btn-primary float-right" })
+            </div>
+        </div>
+
     </div>
 </div>
 

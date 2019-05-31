@@ -2,17 +2,28 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace AutomatedTellerMachine.Models
 {
     public class WithdrawalService : IWithdrawal
     {
-        public Response Dispensor(int amount)
+        private static readonly int[] denominators = { 200, 100, 50, 20, 10, 1 };
+        private IAccount _service;
+
+        public WithdrawalService()
+        {
+            _service = new AccountService();
+        }
+
+        public WithdrawalService(IAccount account)
+        {
+            _service = account;
+        }
+        public Response Denominator(int amount)
         {
             //StringBuilder sb = new StringBuilder();
             List<RadioListViewModel> rl = new List<RadioListViewModel>();
-            int[] denominators = { 200, 100, 50, 20, 10 };
+
             Response response = new Response();
             try
             {
@@ -20,11 +31,14 @@ namespace AutomatedTellerMachine.Models
                 {
                     for (int i = 0; i < denominators.Length; i++)
                     {
-                        string st = DispensorHelper(amount, i);
-                        if (!st.Equals(string.Empty))
+                        if (denominators[i] != 1)
                         {
-                            st = st.Substring(0, st.LastIndexOf("+")); // Remove the last + resulted by the last call of the recursive function
-                            rl.Add(new RadioListViewModel { Label = st, Value = i });
+                            string st = DenominatorHelper(amount, i);
+                            if (!st.Equals(string.Empty))
+                            {
+                                st = st.Substring(0, st.LastIndexOf("+")); // Remove the last + resulted by the last call of the recursive function
+                                rl.Add(new RadioListViewModel { Label = st, Value = i });
+                            }
                         }
 
                     }
@@ -47,23 +61,26 @@ namespace AutomatedTellerMachine.Models
             return response;
         }
 
-        public string DispensorHelper(int amount, int index)
+        public string DenominatorHelper(int amount, int index)
         {
-            int[] denominators = { 200, 100, 50, 20, 10, 1 };
             if (amount / denominators[index] < 1)
                 return string.Empty;
             else
             {
                 int count = amount / denominators[index];
 
-                return Convert.ToString(count) + "*" + Convert.ToString(denominators[index]) + "+" + DispensorHelper(amount - (count * denominators[index]), ++index);
+                return Convert.ToString(count) + "*" + Convert.ToString(denominators[index]) + "+" + DenominatorHelper(amount - (count * denominators[index]), ++index);
             }
         }
 
-        public Task<bool> Withdraw(int amount)
+        public Response Dispensor(int amount)
         {
-            throw new NotImplementedException();
+            Response response = new Response();
+            if (_service.UpdateBalance((-1 * amount)).Status)
+            {
+                response.Status = true;
+            }
+            return response;
         }
-
     }
 }

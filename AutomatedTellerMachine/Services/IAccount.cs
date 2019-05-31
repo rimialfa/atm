@@ -7,6 +7,6 @@ namespace AutomatedTellerMachine.Services
         Response GetAccount(string identityHash);
         void SetSession(string identityHash);
         string GetSession();
-        bool UpdateBalance(Account account, int amount);
+        Response UpdateBalance(int amount);
     }
 }

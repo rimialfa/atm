@@ -1,6 +1,5 @@
 ﻿using AutomatedTellerMachine.Models;
 using AutomatedTellerMachine.Services;
-using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace AutomatedTellerMachine.Controllers
@@ -8,9 +7,9 @@ namespace AutomatedTellerMachine.Controllers
     public class AuthController : Controller
     {
         private IAuthentication _service;
-        private List<string> _cardAttempts = new List<string>();
         public AuthController()
         {
+
             _service = new AuthenticationService();
         }
         public AuthController(IAuthentication service)
@@ -29,5 +28,10 @@ namespace AutomatedTellerMachine.Controllers
             return Json(auth, JsonRequestBehavior.AllowGet);
 
         }
+        public ActionResult Logout()
+        {
+            return View();
+        }
+
     }
 }

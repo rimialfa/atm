@@ -29,35 +29,51 @@ namespace AutomatedTellerMachine.Models
             Response auth = new Response();
             try
             {
-                Response currentAccount = _account.GetAccount(identityHash);
 
-                if (currentAccount != null)
+                Card card = _cardReader.GetCard(cardNumber);
+                if (card != null)
                 {
-                    _account.SetSession(identityHash);
-                    auth.Status = true;
-                    auth.Message = "Login Sucess";
+                    if (!card.IsReported && !card.IsRetained)
+                    {
+                        Response currentAccount = _account.GetAccount(identityHash);
+                        if (currentAccount.Status)
+                        {
+                            _account.SetSession(identityHash);
+                            auth.Status = true;
+                            auth.Message = "Login Sucess";
+                        }
+                        else
+                        {
+                            auth.Status = false;
+                            _cardAttempts.Add(cardNumber);
+                            attempts = _cardAttempts.Count(c => c.Equals(cardNumber));
+                            auth.Message = $"Attempt : # {attempts} Login Failed, Please insert the correct CardNumber/Pin combination!";
+                            if (attempts > 3)
+                            {
+                                _cardReader.RetainCard(_cardReader.GetCard(cardNumber));
+                                auth.Message = "This card has been retained, please visit our branch for help";
+                                _cardAttempts.Clear();
+                                _account.SetSession("");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (!card.IsRetained)
+                        {
+                            _cardReader.RetainCard(_cardReader.GetCard(cardNumber));
+                        }
+
+                        auth.Message = "This card has been retained, please visit our branch for help";
+                    }
 
                 }
 
                 else
                 {
+                    // In case the card is not found by the card reader service
                     auth.Status = false;
-                    _cardAttempts.Add(cardNumber);
-                    attempts = _cardAttempts.Count(c => c.Equals(cardNumber));
-                    auth.Message = $"Attempt : # {attempts} Login Failed, Please insert the correct CardNumber/Pin combination!";
-                    if (attempts > 3)
-                    {
-                        // This check is added in case the card number entered cannot be found by the CardReaderService
-                        Card card = _cardReader.GetCard(cardNumber);
-                        if (card != null)
-                        {
-                            card.IsRetained = true;
-                        }
-
-                        auth.Message = "Your card has been retained, please visit our branch for help";
-
-                    }
-
+                    auth.Message = "Wrong card number";
 
                 }
 

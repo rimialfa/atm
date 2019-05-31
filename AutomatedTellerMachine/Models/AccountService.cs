@@ -8,17 +8,18 @@ namespace AutomatedTellerMachine.Models
 {
     public class AccountService : IAccount
     {
-        private List<Account> _accounts = new List<Account>()
+        private static List<Account> _accounts = new List<Account>()
         {
             new Account
-            {
-                IdentityHash = "ACC|1234|2369",
+            { 
+                // the hash is in this format "ACC|{cardNumber}|{pin}"
+                IdentityHash = "ACC|1234|1234",
                 Number = "AJO01254",
                 Balance = 500
             },
             new Account
             {
-                IdentityHash = "ACC|12345|2323",
+                IdentityHash = "ACC|12345|12345",
                 Number = "AJO01255",
                 Balance = 150
             }
@@ -32,13 +33,17 @@ namespace AutomatedTellerMachine.Models
                 if (identityHash != string.Empty)
                 {
                     Account account = _accounts.Where(c => c.IdentityHash == identityHash).FirstOrDefault();
-                    response.Status = true;
-                    response.Message = JsonConvert.SerializeObject(account);
-                }
-                else
-                {
-                    response.Status = false;
-                    response.Message = "Account not found";
+                    if (account != null)
+                    {
+                        response.Status = true;
+                        response.Message = JsonConvert.SerializeObject(account);
+                    }
+                    else
+                    {
+                        response.Status = false;
+                        response.Message = "Account not found";
+                    }
+
                 }
 
             }
@@ -61,13 +66,25 @@ namespace AutomatedTellerMachine.Models
             return _session;
         }
 
-        public bool UpdateBalance(Account account, int amount)
+        public Response UpdateBalance(int amount)
         {
             // If the ammount is negative, it will decrease the balance ny the amount provided.
             // This is Implemented like this to make space for an option of deposit in the future.
+            Response response = new Response();
+            try
+            {
+                Account account = _accounts.Where(c => c.IdentityHash == _session).FirstOrDefault();
+                account.Balance += amount;
+                response.Status = true;
 
-            account.Balance += amount;
-            return true;
+            }
+            catch (Exception e)
+            {
+                response.Status = true;
+                response.Message = e.ToString();
+            }
+
+            return response;
         }
 
     }
