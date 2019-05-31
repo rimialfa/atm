@@ -5,13 +5,13 @@ using System.Web.Mvc;
 namespace AutomatedTellerMachine.Tests.Controllers
 {
     [TestClass]
-    public class HomeControllerTest
+    public class AuthControllerTest
     {
         [TestMethod]
         public void Index()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            AuthController controller = new AuthController();
 
             // Act
             ViewResult result = controller.Index() as ViewResult;

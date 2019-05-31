@@ -1,4 +1,6 @@
 ﻿using AutomatedTellerMachine.Services;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,11 +23,43 @@ namespace AutomatedTellerMachine.Models
                 Balance = 150
             }
         };
-        public Account GetAccount(string identityHash)
+        public static string _session;
+        public Response GetAccount(string identityHash)
         {
-            return _accounts.Where(c => c.IdentityHash == identityHash).FirstOrDefault();
+            Response response = new Response();
+            try
+            {
+                if (identityHash != string.Empty)
+                {
+                    Account account = _accounts.Where(c => c.IdentityHash == identityHash).FirstOrDefault();
+                    response.Status = true;
+                    response.Message = JsonConvert.SerializeObject(account);
+                }
+                else
+                {
+                    response.Status = false;
+                    response.Message = "Account not found";
+                }
+
+            }
+            catch (Exception e)
+            {
+
+                response.Status = false;
+                response.Message = e.ToString();
+            }
+            return response;
         }
 
+        public void SetSession(string identityHash)
+        {
+            _session = identityHash;
+
+        }
+        public string GetSession()
+        {
+            return _session;
+        }
 
         public bool UpdateBalance(Account account, int amount)
         {

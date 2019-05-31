@@ -5,17 +5,15 @@ using System.Web.Mvc;
 
 namespace AutomatedTellerMachine.Controllers
 {
-    public class HomeController : Controller
+    public class AuthController : Controller
     {
         private IAuthentication _service;
-
         private List<string> _cardAttempts = new List<string>();
-        // GET /home/index 
-        public HomeController()
+        public AuthController()
         {
             _service = new AuthenticationService();
         }
-        public HomeController(IAuthentication service)
+        public AuthController(IAuthentication service)
         {
             _service = service;
         }
@@ -30,10 +28,6 @@ namespace AutomatedTellerMachine.Controllers
 
             return Json(auth, JsonRequestBehavior.AllowGet);
 
-        }
-        public ActionResult MainMenu()
-        {
-            return View();
         }
     }
 }

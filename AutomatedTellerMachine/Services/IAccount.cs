@@ -4,7 +4,9 @@ namespace AutomatedTellerMachine.Services
 {
     public interface IAccount
     {
-        Account GetAccount(string identityHash);
+        Response GetAccount(string identityHash);
+        void SetSession(string identityHash);
+        string GetSession();
         bool UpdateBalance(Account account, int amount);
     }
 }

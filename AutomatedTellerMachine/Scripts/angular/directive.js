@@ -1,4 +1,4 @@
-﻿app.directive('myDirective', function () {
+﻿app.directive('divisibleBy10', function () {
     return {
         require: 'ngModel',
         link: function (scope, element, attr, mCtrl) {

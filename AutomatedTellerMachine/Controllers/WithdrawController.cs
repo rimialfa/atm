@@ -15,8 +15,7 @@ namespace AutomatedTellerMachine.Controllers
         [HttpPost]
         public ActionResult Index(int id)
         {
-            Response response = _service.Dispensor(id);
-            return Json(response);
+            return Json(_service.Dispensor(id));
         }
 
         public ActionResult Index()

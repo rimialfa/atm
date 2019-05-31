@@ -25,8 +25,6 @@ namespace AutomatedTellerMachine.Models
                         {
                             st = st.Substring(0, st.LastIndexOf("+")); // Remove the last + resulted by the last call of the recursive function
                             rl.Add(new RadioListViewModel { Label = st, Value = i });
-
-                            //sb.Append("<input type=\"radio\" name=\"dispense\" value=\"" + i + "\"> " + st + "<br>");
                         }
 
                     }

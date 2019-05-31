@@ -7,28 +7,79 @@
     <div class="col">
         <h3 class="text-center text-uppercase">Select an amount</h3>
         <hr />
-        <div class="row p-4">
-            <div class="col">
-                <div class="float-right">
-                    <a href="/" class="btn btn-primary">20</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="/" class="btn btn-primary">100</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="/" class="btn btn-primary">500</a>
+        <form name="myForm" ng-controller="withdrawPresetCtrl" ng-submit="submitForm()" novalidate>
+            <div class="row p-4">
+                <div class="col">
+                    <ul class="list-group float-right">
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input class="form-check-input" ng-model="value" ng-change="checkBalance(value)" type="radio" name="amount" id="20" value="20">
+                                <label class="form-check-label" for="20">
+                                    20
+                                </label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input class="form-check-input" ng-model="value"  ng-change="checkBalance(value)" type="radio" name="amount" id="100" value="100">
+                                <label class="form-check-label" for="100">
+                                    100
+                                </label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input class="form-check-input" ng-model="value" ng-change="checkBalance(value)" type="radio" name="amount" id="500" value="500">
+                                <label class="form-check-label" for="500">
+                                    500
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
+                <div class="col">
+                    <div class="text-danger">{{message}}</div>
+                </div>
+                <div class="col">
+                    <ul class="list-group float-left">
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input class="form-check-input" ng-model="value" ng-change="checkBalance(value)" type="radio" name="amount" id="50" value="50">
+                                <label class="form-check-label" for="50">
+                                    50
+                                </label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input class="form-check-input" ng-model="value" ng-change="checkBalance(value)" type="radio" name="amount" id="200" value="200">
+                                <label class="form-check-label" for="200">
+                                    200
+                                </label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input class="form-check-input" ng-model="value" ng-change="checkBalance(value)" type="radio" name="amount" id="1000" value="1000">
+                                <label class="form-check-label" for="1000">
+                                    1000
+                                </label>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
             </div>
-            <div class="col">
-            </div>
-            <div class="col">
-                <div class="float-left">
-                    <a href="/" class="btn btn-primary">50</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="/" class="btn btn-primary">200</a>
-                    <div class="dropdown-divider"></div>
+            <div class="row pt-0 pr-4 pl-4 pb-4">
+                <div class="col">
+                    <hr />
                     @Html.ActionLink("Other", "Other", "Withdraw", new { }, new { @class = "btn btn-primary" })
                 </div>
             </div>
-        </div>
+           
+        </form>
+       
     </div>
 </div>
 

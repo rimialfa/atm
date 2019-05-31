@@ -10,6 +10,7 @@ namespace AutomatedTellerMachine.Models
         private IAccount _account;
         private ICardReader _cardReader;
         private static List<string> _cardAttempts = new List<string>();
+        public static string session = string.Empty;
         public AuthenticationService()
         {
             _account = new AccountService();
@@ -28,10 +29,11 @@ namespace AutomatedTellerMachine.Models
             Response auth = new Response();
             try
             {
-                Account currentAccount = _account.GetAccount(identityHash);
+                Response currentAccount = _account.GetAccount(identityHash);
 
                 if (currentAccount != null)
                 {
+                    _account.SetSession(identityHash);
                     auth.Status = true;
                     auth.Message = "Login Sucess";
 
